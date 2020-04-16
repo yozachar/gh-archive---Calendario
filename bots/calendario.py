@@ -1,6 +1,7 @@
 # Calendario/calendario.py
 
 import tweepy
+import random
 import logging
 import datetime as dt
 from config import create_api
@@ -8,13 +9,18 @@ from config import create_api
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
+
 daily_tweet = ''
+fill_bars = ('█', '⣿', '■', '█', '⬛', '▰', '◼', '▮', '⬤', '⚫', '#', '✅', '🔶', '💛')
+null_bars = ('▁', '⣀', '□', '░', '⬜', '▱', '▭', '▯', '◯', '⚪', '..', '⬜️', '🔷', '🖤')
+
+rand_select = random.randrange(len(fill_bars))
+fb, nb = fill_bars[rand_select], null_bars[rand_select]
 
 
 def print_progress(string, progress, ratio):
 	global daily_tweet
-	daily_tweet += string+'\n'+'▰' * \
-		int(progress) + '▱'*(20-int(progress)) + ' ' + str(round(ratio*100, 2))+"%\n"
+	daily_tweet += string+'\n'+fb*int(progress) + nb*(20-int(progress)) + ' ' + str(round(ratio*100, 2))+"%\n"
 	print(daily_tweet)
 
 
