@@ -19,7 +19,7 @@ fb, nb = fill_bars[rand_select], null_bars[rand_select]
 
 def print_progress(string, progress, ratio):
 	global daily_tweet
-	daily_tweet += string+'\n'+fb*int(progress) + nb*(20-int(progress)) + ' ' + str(round(ratio*100, 2))+"%\n"
+	daily_tweet += string+'\n'+fb*int(progress) + nb*(20-int(progress)) + ' ' + str(int(ratio*100))+"%\n"
 
 
 def calculate_progress():
