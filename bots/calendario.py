@@ -1,7 +1,13 @@
-# Calendario/calendario.py
+'''
+* Author: joe733
+* Mail: jovial7joe@hotmail.com
+* Python: Version 3.6+
+* Dependency: tweepy module
+* ------------------------------------------------
+* Purpose: Being time consious is always important.
+'''
 
 import tweepy
-import random
 import logging
 import datetime as dt
 from config import create_api
@@ -10,19 +16,17 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 daily_tweet = ''
-fill_bars = ('█', '⣿', '■', '█', '⬛', '▰', '◼', '▮', '⬤', '⚫', '#', '✅', '🔶', '💛')
-null_bars = ('▁', '⣀', '□', '░', '⬜', '▱', '▭', '▯', '◯', '⚪', '.', '⬜️', '🔷', '🖤')
-
-rand_select = random.randrange(len(fill_bars))
-fb, nb = fill_bars[rand_select], null_bars[rand_select]
+fb, nb = '✅', '⬜️' # filled and null bullets
 
 
 def print_progress(string, progress, ratio):
+	'''Prints year's progress'''
 	global daily_tweet
 	daily_tweet += string+'\n'+fb*int(progress) + nb*(20-int(progress)) + ' ' + str(int(ratio*100))+"%\n"
 
 
 def calculate_progress():
+	'''Calculates year's progress'''
 	year = int(dt.datetime.today().strftime("%Y"))
 	leap_year = True if year % 4 == 0 else False
 
@@ -54,9 +58,10 @@ def calculate_progress():
 
 
 if __name__ == "__main__":
+	'''My driver code'''
 	api = create_api()
 	calculate_progress()
-	tweet_this = dt.datetime.today().strftime('%y-%m-%d') + '\n' + daily_tweet + '\nGuess tomorrow\'s symbol :)'
+	tweet_this = dt.datetime.today().strftime('%y • %m • %d') + '\n\n' + daily_tweet
 	try:
 		api.update_status(tweet_this)
 	except tweepy.TweepError as error:
